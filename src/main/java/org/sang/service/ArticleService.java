@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by sang on 2017/12/20.
@@ -142,4 +143,5 @@ public class ArticleService {
     public List<Integer> getDataStatistics() {
         return articleMapper.getDataStatistics(Util.getCurrentUser().getId());
     }
+
 }

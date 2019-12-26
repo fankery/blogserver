@@ -3,7 +3,9 @@ package org.sang.bean;
 import java.sql.Timestamp;
 
 /**
- * Created by sang on 2017/12/19.
+ *
+ * @author sang
+ * @date 2017/12/19
  */
 public class Category {
     private Long id;

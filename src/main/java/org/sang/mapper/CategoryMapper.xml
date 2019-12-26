@@ -3,8 +3,13 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="org.sang.mapper.CategoryMapper">
-    <select id="getAllCategories" resultType="org.sang.bean.Category">
+    <select id="getAllCategories" parameterType="map" resultType="org.sang.bean.Category">
         SELECT * FROM category
+        <where>
+            <if test="begin != null and begin != ''">
+                limit #{begin},#{end}
+            </if>
+        </where>
     </select>
     <delete id="deleteCategoryByIds">
         DELETE FROM category WHERE id IN

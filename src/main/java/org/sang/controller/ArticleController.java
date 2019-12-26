@@ -4,6 +4,7 @@ import org.apache.commons.io.IOUtils;
 import org.sang.bean.Article;
 import org.sang.bean.RespBean;
 import org.sang.service.ArticleService;
+import org.sang.service.ArticleService2;
 import org.sang.utils.Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,10 @@ public class ArticleController {
     private SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 
     @Autowired
-    ArticleService articleService;
+    private ArticleService articleService;
+
+    @Autowired
+    private ArticleService2 articleService2;
 
     @RequestMapping(value = "/", method = RequestMethod.POST)
     public RespBean addNewArticle(Article article) {
@@ -109,5 +113,11 @@ public class ArticleController {
         map.put("categories", categories);
         map.put("ds", dataStatistics);
         return map;
+    }
+
+    @PostMapping("/export")
+    @ResponseBody
+    public void export(@RequestBody Map<String,Object> param){
+        articleService2.export(param);
     }
 }

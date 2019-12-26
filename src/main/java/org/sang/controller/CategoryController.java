@@ -1,18 +1,21 @@
 package org.sang.controller;
 
+import org.apache.poi.ss.usermodel.Workbook;
 import org.sang.bean.Category;
 import org.sang.bean.RespBean;
 import org.sang.service.CategoryService;
+import org.sang.service.CategoryService2;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 超级管理员专属Controller
+ * @author fanker
  */
 @RestController
 @RequestMapping("/admin/category")
@@ -20,9 +23,13 @@ public class CategoryController {
     @Autowired
     CategoryService categoryService;
 
-    @RequestMapping(value = "/all", method = RequestMethod.GET)
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
+    @Autowired
+    private CategoryService2 categoryService2;
+
+    @PostMapping("/categoryList")
+    @ResponseBody
+    public List<Category> getAllCategories(@RequestBody Map<String,Object> param) {
+        return categoryService2.getAllCategories(param);
     }
 
     @RequestMapping(value = "/{ids}", method = RequestMethod.DELETE)
@@ -56,5 +63,10 @@ public class CategoryController {
             return new RespBean("success", "修改成功!");
         }
         return new RespBean("error", "修改失败!");
+    }
+
+    @PostMapping("export")
+    public void export(@RequestBody Map<String, Object> param, HttpServletResponse response) {
+        categoryService2.export(param, response);
     }
 }
